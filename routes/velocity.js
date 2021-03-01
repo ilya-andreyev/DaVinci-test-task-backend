@@ -11,10 +11,17 @@ const allSprints = async (req, res) => {
       .map(({ custom_fields: customFields }) => Number(customFields[0].value))
       .reduce((acc, val) => acc + val),
   }))
-  const data = arrOfSprintsVelocity.map((sprintVelocity) => ({
-    id: Object.keys(sprintVelocity)[0],
-    sprintVelocity: Object.values(sprintVelocity)[0],
-  }))
+  const data = arrOfSprintsVelocity.map((sprintVelocity) => {
+    const sprintName = issues
+      .find((issue) => issue.fixed_version.id === Number(Object.keys(sprintVelocity)[0]))
+      .fixed_version
+      .name
+    return {
+      id: Object.keys(sprintVelocity)[0],
+      velocity: Object.values(sprintVelocity)[0],
+      sprintName,
+    }
+  })
   res.send(data)
 }
 
@@ -28,12 +35,12 @@ const oneSprint = async ({ query: { id } }, res) => {
     }
     res.send(data)
   } else {
-    const sprintVelocity = sprintIssues
+    const velocity = sprintIssues
       .map(({ custom_fields: customFields }) => Number(customFields[0].value))
       .reduce((acc, val) => acc + val)
     const data = {
       id,
-      sprintVelocity,
+      velocity,
     }
     res.send(data)
   }
