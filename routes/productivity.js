@@ -12,7 +12,7 @@ const oneIssue = async ({ query: { id } }, res) => {
     const storyPoints = issue.custom_fields[0].value
     const data = {
       id,
-      developmentDividedByPoints: spentHours / storyPoints,
+      productivity: (spentHours / storyPoints).toFixed(2),
     }
     res.send(data)
   }

@@ -21,7 +21,7 @@ const oneIssue = async ({ query: { id } }, res) => {
 
     const data = {
       id,
-      stabilizationRatio: defectsHours / issue.spent_hours,
+      stabilizationRatio: (defectsHours / issue.spent_hours).toFixed(2),
     }
     res.send(data)
   }
