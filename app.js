@@ -5,10 +5,12 @@ const cors = require('cors')
 const routes = require('./routes/routes')
 
 const app = express()
-const port = 3001
+const PORT = process.env.PORT || 3001
 
 app.use(cors())
 
 routes(app)
 
-app.listen(port)
+app.listen(PORT, () => {
+  console.log('Server has been started...')
+})
